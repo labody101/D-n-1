@@ -1,0 +1,58 @@
+#icon:hover{
+    transform: matrix3d(0.9, 0, 0, 0, 0, 0.9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    transition: 0.2s;
+}
+.icon a{
+    margin-right:10px;
+    text-align: left;
+}
+#btn_register_mail{
+    background-color:#b31f2a;
+    color: white;
+    padding: 12px;
+    border: none;
+}
+#btn_register_mail:hover{
+    background-color:#343434;
+    border: none;
+}
+.footer-content{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+#contact{
+    color: white;
+    margin: 0px;
+    padding: 0px;
+}
+#contact:hover{
+    color: rgb(255, 1, 1);
+    transition: 0.5s;
+}
+*{
+    list-style: none; 
+}
+#text{
+    text-align: left;
+    padding-top:15px;
+}
+#text a{
+    color: #bbb;
+}
+#text a:hover{
+    color: #b31f2a;
+}
+.footer-content {
+    padding: 10px;
+    background-color: #1e1e1e;
+    margin-top: 100px;
+}
+.footer_end p{
+    color: #bbb;
+    margin-left: auto;
+}
+.footer_end{
+    padding-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}

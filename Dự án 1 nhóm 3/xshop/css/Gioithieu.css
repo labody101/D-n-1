@@ -1,0 +1,135 @@
+a{
+  text-decoration: none;
+}
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  @keyframes blink {
+    from { border-color: transparent }
+    to { border-color: orange; }
+  }
+.text{  
+    display: inline-block;
+    margin-left:30px;
+    font-weight: 400;
+}
+.typed-out-1{
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(75, end) forwards,
+  blink .8s  infinite;
+}
+.typed-out-2{
+  color: #b31f2a;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 2s steps(150, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 3s;
+}
+.typed-out-3{
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 4s;
+}
+.typed-out-4{
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 7s;
+}
+.typed-out-5{
+  overflow: hidden;
+  margin: 0;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 10s;
+}
+.typed-out-6{
+  color: #b31f2a;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 2s steps(150, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 12s;
+}
+.typed-out-7{
+  overflow: hidden;
+  margin: 0;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 13s;
+}
+.typed-out-8{
+  color: #b31f2a;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 4s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 17s;
+}
+.typed-out-9{
+  overflow: hidden;
+  margin: 0;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 19s;
+}
+.typed-out-10{
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 3s steps(100, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 22s;
+}
+.typed-out-11{
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 2s steps(75, end) forwards,
+  blink .8s  infinite;
+  animation-delay: 24s;
+}
+.content_gth{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  height: 500px;
+}
+#link{
+  text-decoration: none;
+  color: #b31f2a;
+}
+#link:hover{
+  text-decoration: underline;
+}
+.list_map{
+    padding-right: 10px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
