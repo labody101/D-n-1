@@ -41,13 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pttt = $_POST['pttt'];
     $dcgh = $_POST['dcgh'];
     $tongdon = tongdon();
-    if ($dcgh ="loi" ) {
+    if ($pttt === "loi" ) {
         header('location: bill.php');
     }else{
         $sql = "INSERT into bill(bill_name,bill_email,bill_address,bill_tel,bill_pttt,ngay_dat_hang,total,id_user,reveive_address) values ('$name','$email','$diachi','$sdt','$pttt','$time','$tongdon','$iduser','$dcgh')";
-    $id_bill = pdo_execute_lastinsertID($sql);
-
-    foreach ($_SESSION['mycart'] as $cart) {
+        $id_bill = pdo_execute_lastinsertID($sql);
+        foreach ($_SESSION['mycart'] as $cart) {
         $idkh = $_SESSION['user']['ma_kh'];
         $sql = "INSERT into cart(id_user,id_pro,img,namepro,price,soluong,thanhtien,id_bill) values ('$idkh','$cart[0]','$cart[2]','$cart[1]','$cart[4]','$cart[3]','$tongdon','$id_bill')";
         pdo_execute($sql);

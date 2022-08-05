@@ -39,11 +39,11 @@ $ttc = pdo_query($sql);
         <h3>Thông tin đơn hàng</h3>
         <br>
         
-            <li>- Mã đơn hàng: Order-<?=$ttdh['id']?> </li>
-            <li>- Ngày đặt hàng: <?=$ttdh['ngay_dat_hang']?> </li>
-            <li>- Tổng đơn hàng: <?=$ttdh['total']?> </li>
-            <li>- Phương thức thanh toán: <?=$ttdh['bill_pttt']?> </li>
-            <li>-Địa chỉ giao hàng: <?=$ttdh['reveive_address']?></li>
+            <li style="text-align=left;">- Mã đơn hàng: Order-<?=$ttdh['id']?> </li>
+            <li style="text-align=left;">- Ngày đặt hàng: <?=$ttdh['ngay_dat_hang']?> </li> 
+            <li style="text-align=left;">- Tổng đơn hàng: <?=$ttdh['total']?> </li>
+            <li style="text-align=left;">- Phương thức thanh toán: <?=$ttdh['bill_pttt']?> </li>
+            <li style="text-align=left;">-Địa chỉ giao hàng: <?=$ttdh['bill_address'].' '.$ttdh['reveive_address']?></li>
     </div>
     <div class="ds_cart mb">
     <table>
@@ -68,6 +68,21 @@ $ttc = pdo_query($sql);
                     </tr>
                     <?php $i += 1 ?>
                 <?php endforeach ?>
+                <br>
+                <th colspan="4">Phí ship</th>
+                        <?php
+                        if ($ttdh['reveive_address']!="Thành phố Hồ Chí Minh"||$ttdh['reveive_address']!="Thành phố Hà Nội") {
+                            $tong += 30000;
+                            echo '
+                            <td>30000 VND</td>
+                            ';
+                        }else {
+                            $tong +=20000;
+                            echo '
+                            <td>20000 VND</td>
+                            ';
+                        }
+                        ?>
                 <br>
                 <tr>
                     <th colspan="4">Tổng đơn hàng</th>
