@@ -394,47 +394,11 @@ input[type="email"] {
     width: 90%;
     background-color: white;
     padding: 10px;
-    text-align: center;
+    text-align: left;
     border-radius: 5px;
 }
 .ds_cart table{
     border-collapse: collapse;
-}
-.ds_cart table th:nth-child(1){
-    width: 20%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(0, 164, 0);
-}
-.ds_cart table th:nth-child(2){
-    width: 20%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(0, 164, 0);
-}
-.ds_cart table th:nth-child(3){
-    width: 20%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(0, 164, 0);
-}
-.ds_cart table th:nth-child(4){
-    width: 20%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(0, 164, 0);
-}
-.ds_cart table th:nth-child(5){
-    width: 20%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(0, 164, 0);
-}
-.ds_cart table th:nth-child(6){
-    width: 5%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(0, 164, 0);
 }
 .row_cart{
     background-color: white;

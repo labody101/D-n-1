@@ -43,10 +43,10 @@ $ttc = pdo_query($sql);
             <li style="text-align=left;">- Ngày đặt hàng: <?=$ttdh['ngay_dat_hang']?> </li> 
             <li style="text-align=left;">- Tổng đơn hàng: <?=$ttdh['total']?> </li>
             <li style="text-align=left;">- Phương thức thanh toán: <?=$ttdh['bill_pttt']?> </li>
-            <li style="text-align=left;">-Địa chỉ giao hàng: <?=$ttdh['bill_address'].' '.$ttdh['reveive_address']?></li>
+            <li style="text-align=left;">- Địa chỉ giao hàng: <?=$ttdh['bill_address'].' '.$ttdh['reveive_address']?></li>
     </div>
     <div class="ds_cart mb">
-    <table>
+    <table class="table table-hover">
                 <tr>
                     <th>Mã hàng hóa</th>
                     <th>Tên sản phẩm</th>

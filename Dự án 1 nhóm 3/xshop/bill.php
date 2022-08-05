@@ -42,7 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $dcgh = $_POST['dcgh'];
     $tongdon = tongdon();
     if ($pttt === "loi" ) {
-        header('location: bill.php');
+        echo '<script>alert("Vui lòng chọn phương thức thanh toán");</script>';
+        echo '<script>window.location.href="bill.php";</script>';
+        exit;
     }else{
         $sql = "INSERT into bill(bill_name,bill_email,bill_address,bill_tel,bill_pttt,ngay_dat_hang,total,id_user,reveive_address) values ('$name','$email','$diachi','$sdt','$pttt','$time','$tongdon','$iduser','$dcgh')";
         $id_bill = pdo_execute_lastinsertID($sql);
@@ -74,23 +76,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><input class="form-control" id="floatingInput" type="text" name="diachi" value="<?= $diachi ?>" required></td>
                 <tr>
                     <td><div class="form-check" >
-                            <input class="form-check-input"  type="radio" id="flexRadioDefault1" checked value="Thành phố Hồ Chí Minh" name="dcgh">
+                            <input class="form-check-input"  type="radio" checked value="Thành phố Hồ Chí Minh" name="radio" id="hide">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 Thành phố Hồ Chí Minh
                             </label>
                     </div><td>
                     <div class="form-check"  style="margin-left:20px" >
-                            <input class="form-check-input" type="radio" id="flexRadioDefault2" name="dcgh" value="Thành phố Hà Nội">
+                            <input class="form-check-input" type="radio"  name="radio" value="Thành phố Hà Nội" id="hide1">
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Thành phố Hà Nội
                             </label>
                     </div>
                     <td><div class="form-check" >
-                            <input class="form-check-input"  type="radio" id="flexRadioDefault3" name="dcgh" value="Các tỉnh thành khác">
+                            <input class="form-check-input"  type="radio"  name="radio" id="appear" value="Các tỉnh thành khác">
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Các tỉnh thành khác
                             </label>
+                            <input type="text" id="content" class="form-control" placeholder="Tỉnh thành khác" aria-label="Tỉnh thành khác" name="dcgh">
                         </div></td>
+                        <script language="javascript">
+
+                        document.getElementById("hide").onclick = function () {
+                            document.getElementById("content").style.display = 'none';
+                            document.getElementById("content").value = "Thành phố Hồ Chí Minh";
+                        };
+
+                        document.getElementById("hide1").onclick = function () {
+                            document.getElementById("content").style.display = 'none';
+                            document.getElementById("content").value = "Thành phố Hà Nội";
+                        };
+
+                        document.getElementById("appear").onclick = function () {
+                            document.getElementById("content").style.display = 'block';
+                            document.getElementById("content").value = "";
+                        };
+
+                        </script>
                 </tr>
                 <tr>
                     <td>Email</td>
@@ -125,24 +146,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </tr>
                 <?php $tong = 0;
                 $i = 0; ?>
-                <?php foreach ($_SESSION['mycart'] as $sp_add) : ?>
-                    <?php $ttien = $sp_add[3] * $sp_add[4]; ?>
-                    <?php $tong += $ttien; ?>
-                    <?php $id_xoa = '<a href="cart_del.php?id=' . $i . '"><input type="submit" value="Xóa"></a>'; ?>
-                    <tr scope="row">
-                        <td ><?= $sp_add[0] ?></td>
-                        <td ><?= $sp_add[1] ?></td>
-                        <td ><img src="admin/upload_sp/<?= $sp_add[2] ?>" width="120" alt=""></td>
-                        <td ><?= $sp_add[3] ?></td>
-                        <td ><?= $ttien ?> VNĐ</td>
+                    <?php foreach ($_SESSION['mycart'] as $sp_add) : ?>
+                        <?php $ttien = $sp_add[3] * $sp_add[4]; ?>
+                        <?php $tong += $ttien; ?>
+                        <?php $id_xoa = '<a href="cart_del.php?id=' . $i . '"><input type="submit" value="Xóa"></a>'; ?>
+                        <tr scope="row">
+                            <td ><?= $sp_add[0] ?></td>
+                            <td ><?= $sp_add[1] ?></td>
+                            <td ><img src="admin/upload_sp/<?= $sp_add[2] ?>" width="120" alt=""></td>
+                            <td ><?= $sp_add[3] ?></td>
+                            <td ><?= $ttien ?> VNĐ</td>
+                        </tr>
+                        <?php $i += 1 ?>
+                    <?php endforeach ?>
+                    <br>
+                    <tr>
+                        <th colspan="4">Tổng đơn hàng</th>
+                        <td><span style="color:red;font-weight:bold;font-size:20px;"><?= $tong ?> VNĐ</span></td>
                     </tr>
-                    <?php $i += 1 ?>
-                <?php endforeach ?>
-                <br>
-                <tr>
-                    <th colspan="4">Tổng đơn hàng</th>
-                    <td><?= $tong ?> VNĐ</td>
-                </tr>
+                    <?php
+                        if ($tong===0) {
+                            echo '<script>alert("Giỏ hàng của bạn đang trống");</script>';
+                            echo '<script>window.location.href="cart.php";</script>';
+                            exit;
+                        }
+                    ?>
             </table>
             <a href="bill.php"><input type="submit" name="comfirm" value="Hoàn tất đặt hàng"></a>
         </div>

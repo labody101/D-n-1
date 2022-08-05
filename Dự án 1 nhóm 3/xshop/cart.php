@@ -1,3 +1,4 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <?php
 include 'header.php';
 include 'pdo/pdo.php';
@@ -20,14 +21,14 @@ if (!isset($_SESSION['mycart'])) {
 ?>
 <div class="row_cart">
     <div class="ds_cart mb">
-        <table>
+            <table class="table table-hover">
             <tr>
-                <th>Mã hàng hóa</th>
-                <th>Tên sản phẩm</th>
-                <th>Ảnh sản phẩm</th>
-                <th>Số lượng sản phẩm</th>
-                <th>Đơn giá</th>
-                <th>Chức năng</th>
+                <th scope="col">Mã hàng hóa</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Ảnh sản phẩm</th>
+                <th scope="col">Số lượng sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Chức năng</th>
             </tr>
             <?php $tong = 0;
             $i = 0; ?>
@@ -46,8 +47,8 @@ if (!isset($_SESSION['mycart'])) {
                     <?php $i += 1 ?>
             <?php endforeach ?>
             <tr>
-                <th colspan="4">Tổng đơn hàng</th>
-                <td><?= $tong ?> VNĐ</td>
+                <th colspan="5">Tổng đơn hàng</th>
+                <td><span style="color:red;font-weight:bold;font-size:20px;"><?= $tong ?> VNĐ</span></td>
             </tr>
         </table>
         <br>
