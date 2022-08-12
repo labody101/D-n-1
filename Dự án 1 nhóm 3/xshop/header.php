@@ -13,7 +13,6 @@ session_start();
     <link rel="stylesheet" href="css/style1.css">
     <script src="https://kit.fontawesome.com/cf75b6105c.js" crossorigin="anonymous"></script>
     <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-    <link rel="stylesheet" href="header.css">
 </head>
 <body>
     <div class="container">
@@ -33,14 +32,14 @@ session_start();
                 </div>
             <?php } else { ?>
                 <div class="ic-user">
-                    <a href="dangnhap.php" ><i class="fas fa-user"></i> &nbsp Đăng nhập</a>
+                    <a href="dangnhap.php"><i class="fas fa-user"></i> &nbsp Đăng nhập</a>
                 </div>
             <?php } ?>
         </header>
         <nav>
             <div class="logo">
                 <a href="index.php">
-                    <img src="img/xshop2.png" alt="logo">
+                    <img src="img/xshop.png" alt="logo">
                 </a>
             </div>
             <div class="ahihi">

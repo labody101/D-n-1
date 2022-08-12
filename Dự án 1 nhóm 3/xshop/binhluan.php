@@ -12,15 +12,15 @@ if (isset($_SESSION['user'])) {
 
     if (isset($_POST['guibl'])) {
         $ndbl = $_POST['bl'];
+        print_r($ndbl);
+        htmlspecialchars($ndbl); 
         $sql = "INSERT into binh_luan(noi_dung,ma_hh,ma_kh,ngay_bl) values  ('$ndbl', '$id', '$u', '$today')";
         pdo_execute($sql);
         header('location: sanpham_chitiet.php?ma_hh='.$id.'');
         die;
     }
 }
-
 ?>
-
 <html>
 
 <head>

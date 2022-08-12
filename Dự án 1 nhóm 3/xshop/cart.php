@@ -3,22 +3,12 @@
 include 'header.php';
 include 'pdo/pdo.php';
 
-// if($_SERVER['REQUEST_METHOD'] == 'POST'){
-//     $id = $_POST['ma_hh'];
-//     $tensp = $_POST['ten_hh'];
-//     $anh = $_POST['anhsp'];
-//     $sl = $_POST['so_luong'];
-//     $gia = $_POST['gia'];
-//     $addsp = [$id,$tensp,$anh,$sl,$gia];
-//     array_splice($_SESSION['mycart'], $addsp[$id],1,$sl);
-//     header('location: bill.php');
-//     die;
-// }
 if (!isset($_SESSION['mycart'])) {
     $_SESSION['mycart'] = [];
 }
 
 ?>
+<h1 style="text-align:center">Giỏ hàng</h1>
 <div class="row_cart">
     <div class="ds_cart mb">
             <table class="table table-hover">
@@ -52,8 +42,10 @@ if (!isset($_SESSION['mycart'])) {
             </tr>
         </table>
         <br>
-        <a href="cart_del.php"><input type="button" value="Xóa tất cả trong giỏ hàng"></a> /
-        <a href="bill.php"><input type="button" value="Đặt hàng"></a>
+        <div class="btn" style="margin-left:360px">
+            <a href="cart_del.php"><input type="button" value="Xóa tất cả trong giỏ hàng"></a> /
+            <a href="bill.php"><input type="button" value="Đặt hàng"></a>
+        </div>
     </div>
     <a href="ds_donhang.php">Đơn hàng của tôi</a>
 </div>

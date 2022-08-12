@@ -5,7 +5,6 @@
 <?php
 include 'header.php';
 include 'pdo/pdo.php';
-
 $id = $_GET['id'];
 $sql = "SELECT * from bill where id = $id";
 $ttdh = pdo_query_one($sql);
@@ -69,7 +68,7 @@ $ttc = pdo_query($sql);
                     <?php $i += 1 ?>
                 <?php endforeach ?>
                 <br>
-                <th colspan="4">Phí ship</th>
+                <th colspan="4">Phí ship (+)</th>
                         <?php
                         if ($ttdh['reveive_address']!="Thành phố Hồ Chí Minh"||$ttdh['reveive_address']!="Thành phố Hà Nội") {
                             $tong += 30000;
@@ -84,9 +83,14 @@ $ttc = pdo_query($sql);
                         }
                         ?>
                 <br>
+                    <tr>
+                        <th colspan="4">Giảm giá (-)</th>
+                        <td ><?= $ttdh['discount'] ?> VNĐ</td>
+                    </tr>
+                <br>
                 <tr>
-                    <th colspan="4">Tổng đơn hàng</th>
-                    <td><?= $tong ?> VNĐ</td>
+                    <th colspan="4">Thành tiền</th>
+                    <td style="font-weight:bold"><?= $tong ?> VNĐ</td>
                 </tr>
             </table>
     </div>

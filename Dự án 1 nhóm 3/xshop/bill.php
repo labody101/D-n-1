@@ -29,7 +29,6 @@ function tongdon(){
     return $tong; 
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset($_SESSION['user'])) $iduser = $_SESSION['user']['ma_kh'];
     else $iduser = 0;
@@ -40,25 +39,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $time = Date("H:i:s d/m/Y");
     $pttt = $_POST['pttt'];
     $dcgh = $_POST['dcgh'];
-    $tongdon = tongdon();
+    $tongdon=tongdon();
+    $voucher = $_POST['voucher'];
+    $sql = "SELECT * from voucher where voucher_code = '$voucher'";
+    $code = pdo_query_one($sql);
+    if ($voucher === "$code[voucher_code]") {   
+        $discount=$tongdon*$code['discount']/100; 
+        $tongdon-=$discount;
+    }else {
+        echo '<script>alert("Mã voucher không đúng");</script>';
+    }
     if ($pttt === "loi" ) {
         echo '<script>alert("Vui lòng chọn phương thức thanh toán");</script>';
         echo '<script>window.location.href="bill.php";</script>';
         exit;
     }else{
-        $sql = "INSERT into bill(bill_name,bill_email,bill_address,bill_tel,bill_pttt,ngay_dat_hang,total,id_user,reveive_address) values ('$name','$email','$diachi','$sdt','$pttt','$time','$tongdon','$iduser','$dcgh')";
+        $sql = "INSERT into bill(bill_name,bill_email,bill_address,bill_tel,bill_pttt,ngay_dat_hang,total,id_user,reveive_address,discount) values ('$name','$email','$diachi','$sdt','$pttt','$time','$tongdon','$iduser','$dcgh','$discount')";
         $id_bill = pdo_execute_lastinsertID($sql);
         foreach ($_SESSION['mycart'] as $cart) {
         $idkh = $_SESSION['user']['ma_kh'];
         $sql = "INSERT into cart(id_user,id_pro,img,namepro,price,soluong,thanhtien,id_bill) values ('$idkh','$cart[0]','$cart[2]','$cart[1]','$cart[4]','$cart[3]','$tongdon','$id_bill')";
         pdo_execute($sql);
     };
+
     header('location: billcomfirm.php?id=' . $id_bill . '');
     die;
     }
-    
 }
-
 
 ?>
 
@@ -76,23 +83,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><input class="form-control" id="floatingInput" type="text" name="diachi" value="<?= $diachi ?>" required></td>
                 <tr>
                     <td><div class="form-check" >
-                            <input class="form-check-input"  type="radio" checked value="Thành phố Hồ Chí Minh" name="radio" id="hide">
+                            <input class="form-check-input"  type="radio"  value="Thành phố Hồ Chí Minh" name="radio" id="hide">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 Thành phố Hồ Chí Minh
                             </label>
                     </div><td>
                     <div class="form-check"  style="margin-left:20px" >
-                            <input class="form-check-input" type="radio"  name="radio" value="Thành phố Hà Nội" id="hide1">
+                            <input class="form-check-input" type="radio"  name="radio" value="Thành phố Hà Nội" id="hide1" >
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Thành phố Hà Nội
                             </label>
+                            
                     </div>
                     <td><div class="form-check" >
                             <input class="form-check-input"  type="radio"  name="radio" id="appear" value="Các tỉnh thành khác">
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Các tỉnh thành khác
                             </label>
-                            <input type="text" id="content" class="form-control" placeholder="Tỉnh thành khác" aria-label="Tỉnh thành khác" name="dcgh">
+                            <input type="text" id="content" class="form-control" placeholder="Tỉnh thành khác" aria-label="Tỉnh thành khác" name="dcgh" style="display:none">
                         </div></td>
                         <script language="javascript">
 
@@ -160,11 +168,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <?php endforeach ?>
                     <br>
                     <tr>
-                        <th colspan="4">Tổng đơn hàng</th>
+                        <th colspan="3"> <span class="iconify" data-icon="bxs:discount" style="color: #0fa958; font-size: 30px;"></span><span >Nhập mã voucher:</span></th>
+                        <th></th>
+                        <th>
+                            <input type="text" class="form-control" placeholder="Mã giảm giá" aria-label="Mã giảm giá" aria-describedby="addon-wrapping" name="voucher">
+                        </th>
+                    <tr>
+                        <th colspan="4"><span class="iconify" data-icon="bi:cash" style="color: #0fa958; font-size: 30px;"></span> Thành tiền</th>
                         <td><span style="color:red;font-weight:bold;font-size:20px;"><?= $tong ?> VNĐ</span></td>
                     </tr>
                     <?php
-                        if ($tong===0) {
+                        if ($i===0) {
                             echo '<script>alert("Giỏ hàng của bạn đang trống");</script>';
                             echo '<script>window.location.href="cart.php";</script>';
                             exit;
