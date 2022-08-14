@@ -13,7 +13,25 @@ $ttc = pdo_query($sql);
 
 
 ?>
-
+<br>
+<div class="status" style="display:grid;grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 3fr">
+    <div class="0"></div>
+    <div class="1">
+        <span class="iconify" data-icon="bi:1-square" style="color: #699bf7; font-size: 30px;"></span>
+        <span>Giỏ hàng</span>
+    </div>
+    <hr width="80%" style="margin: auto">
+    <div class="2">
+        <span class="iconify" data-icon="bi:2-square" style="color: #699bf7; font-size: 30px;"></span>
+        <span>Đặt hàng</span>
+    </div>
+    <hr width="80%" style="margin: auto">
+    <div class="3">
+        <span class="iconify" data-icon="bi:3-square-fill" style="color: #699bf7; font-size: 30px;"></span>
+        <span>Hoàn tất</span>
+    </div>
+</div>
+<br>
 <div class="row_cart">
     <div class="ds_cart mb">
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -47,11 +65,11 @@ $ttc = pdo_query($sql);
     <div class="ds_cart mb">
     <table class="table table-hover">
                 <tr>
-                    <th>Mã hàng hóa</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Ảnh sản phẩm</th>
-                    <th>Số lượng sản phẩm</th>
-                    <th>Đơn giá</th>
+                    <th style="color:#00008B">Mã hàng hóa</th>
+                    <th style="color:#00008B">Tên sản phẩm</th>
+                    <th style="color:#00008B">Ảnh sản phẩm</th>
+                    <th style="color:#00008B">Số lượng sản phẩm</th>
+                    <th style="color:#00008B">Đơn giá</th>
                 </tr>
                 <?php $tong = 0;
                 $i = 0; ?>
@@ -63,7 +81,7 @@ $ttc = pdo_query($sql);
                         <td><?= $c['namepro'] ?></td>
                         <td><img src="admin/upload_sp/<?= $c['img'] ?>" width="120" alt=""></td>
                         <td><?= $c['soluong'] ?></td>
-                        <td><?= $c['thanhtien'] ?> VNĐ</td>
+                        <td style="font-weight:bold"><?= $c['thanhtien'] ?> ₫</td>
                     </tr>
                     <?php $i += 1 ?>
                 <?php endforeach ?>
@@ -73,24 +91,24 @@ $ttc = pdo_query($sql);
                         if ($ttdh['reveive_address']!="Thành phố Hồ Chí Minh"||$ttdh['reveive_address']!="Thành phố Hà Nội") {
                             $tong += 30000;
                             echo '
-                            <td>30000 VND</td>
+                            <td style="font-weight:bold">30000 ₫</td>
                             ';
                         }else {
                             $tong +=20000;
                             echo '
-                            <td>20000 VND</td>
+                            <td style="font-weight:bold">20000 ₫</td>
                             ';
                         }
                         ?>
                 <br>
                     <tr>
                         <th colspan="4">Giảm giá (-)</th>
-                        <td ><?= $ttdh['discount'] ?> VNĐ</td>
+                        <td style="font-weight:bold"><?= $ttdh['discount'] ?> ₫</td>
                     </tr>
                 <br>
                 <tr>
                     <th colspan="4">Thành tiền</th>
-                    <td style="font-weight:bold"><?= $tong ?> VNĐ</td>
+                    <td style="color:#DC143C;font-weight:bold;font-size:20px;"><?= $tong ?> ₫</td>
                 </tr>
             </table>
     </div>

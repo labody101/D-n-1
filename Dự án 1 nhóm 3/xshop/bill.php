@@ -3,6 +3,18 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <?php
+    $servername = "localhost";
+    $database = "xshop2";
+    $username = "root";
+    $password = "";    
+    $conn = mysqli_connect($servername, $username, $password, $database);
+    mysqli_set_charset($conn, "uft8");
+    // Check connection
+    if (!$conn) {
+        die("Kết nối thất bại: " . mysqli_connect_error());
+    } 
+    ?>
+<?php
 include 'header.php';
 include 'pdo/pdo.php';
 
@@ -48,10 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tongdon-=$discount;
     }else {
         echo '<script>alert("Mã voucher không đúng");</script>';
+        echo '<script>window.history.back();</script>';
+        exit;
+    }
+    if ($dcgh === "") {
+        echo '<script>alert("Vui lòng chọn tỉnh thành phố");</script>';
+        echo '<script>window.history.back();</script>';
+        exit;
     }
     if ($pttt === "loi" ) {
         echo '<script>alert("Vui lòng chọn phương thức thanh toán");</script>';
-        echo '<script>window.location.href="bill.php";</script>';
+        echo '<script>window.history.back();</script>';
         exit;
     }else{
         $sql = "INSERT into bill(bill_name,bill_email,bill_address,bill_tel,bill_pttt,ngay_dat_hang,total,id_user,reveive_address,discount) values ('$name','$email','$diachi','$sdt','$pttt','$time','$tongdon','$iduser','$dcgh','$discount')";
@@ -61,14 +80,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "INSERT into cart(id_user,id_pro,img,namepro,price,soluong,thanhtien,id_bill) values ('$idkh','$cart[0]','$cart[2]','$cart[1]','$cart[4]','$cart[3]','$tongdon','$id_bill')";
         pdo_execute($sql);
     };
-
-    header('location: billcomfirm.php?id=' . $id_bill . '');
-    die;
+    $sql = "SELECT namepro FROM cart WHERE id_bill = '$id_bill'";
+    $result = mysqli_query($conn, $sql);
+    $namepro = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    //var_dump($namepro);
+    foreach ($namepro as $name){
+        $xy=implode('',$name);
+        echo ' '.$xy;
+        $a[]=$xy;
+    }
+    $tong_sp=implode('<p>',$a);
+    echo $tong_sp;
+    $sql="INSERT into final_bill(tong_sp, id_bill) VALUES ('$tong_sp','$id_bill')";
+    pdo_execute($sql);
+    unset($_SESSION['mycart']);
+    echo '<script>window.location.href="billcomfirm.php?id=' . $id_bill . '";</script>';
     }
 }
 
 ?>
-
+<div class="status" style="display:grid;grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 3fr">
+    <div class="0"></div>
+    <div class="1">
+        <span class="iconify" data-icon="bi:1-square" style="color: #699bf7; font-size: 30px;"></span>
+        <span>Giỏ hàng</span>
+    </div>
+    <hr width="80%" style="margin: auto">
+    <div class="2">
+        <span class="iconify" data-icon="bi:2-square-fill" style="color: #699bf7; font-size: 30px;"></span>
+        <span>Đặt hàng</span>
+    </div>
+    <hr width="80%" style="margin: auto">
+    <div class="3">
+        <span class="iconify" data-icon="bi:3-square" style="color: #699bf7; font-size: 30px;"></span>
+        <span>Hoàn tất</span>
+    </div>
+</div>
+<br>
 <form action="bill.php" method="post">
     <div class="row_cart mb">
         <div class="cart mb">
@@ -145,11 +193,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h3>Thông tin giỏ hàng</h3><br>
             <table class="table table-hover">
                 <tr>
-                    <th scope="col">Mã hàng hóa</th>
-                    <th scope="col">Tên sản phẩm</th>
-                    <th scope="col">Ảnh sản phẩm</th>
-                    <th scope="col">Số lượng sản phẩm</th>
-                    <th scope="col">Đơn giá</th>
+                    <th scope="col" style="color:#00008B">Mã hàng hóa</th>
+                    <th scope="col" style="color:#00008B">Tên sản phẩm</th>
+                    <th scope="col" style="color:#00008B">Ảnh sản phẩm</th>
+                    <th scope="col" style="color:#00008B">Số lượng sản phẩm</th>
+                    <th scope="col" style="color:#00008B">Đơn giá</th>
                 </tr>
                 <?php $tong = 0;
                 $i = 0; ?>
@@ -162,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td ><?= $sp_add[1] ?></td>
                             <td ><img src="admin/upload_sp/<?= $sp_add[2] ?>" width="120" alt=""></td>
                             <td ><?= $sp_add[3] ?></td>
-                            <td ><?= $ttien ?> VNĐ</td>
+                            <td style="font-weight:bold"><?= $ttien ?> ₫</td>
                         </tr>
                         <?php $i += 1 ?>
                     <?php endforeach ?>
@@ -175,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </th>
                     <tr>
                         <th colspan="4"><span class="iconify" data-icon="bi:cash" style="color: #0fa958; font-size: 30px;"></span> Thành tiền</th>
-                        <td><span style="color:red;font-weight:bold;font-size:20px;"><?= $tong ?> VNĐ</span></td>
+                        <td><span style="color:#DC143C;font-weight:bold;font-size:20px;"><?= $tong ?> ₫</span></td>
                     </tr>
                     <?php
                         if ($i===0) {

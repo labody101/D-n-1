@@ -47,6 +47,12 @@ if (isset($_SESSION['user'])) {
         $bill = pdo_query($sql);
         return sizeof($bill);
     }
+    function ten($idbill){
+        $sql = "SELECT tong_sp from final_bill where id_bill = $idbill";
+        $result = pdo_query_one($sql);
+        $ten=implode ('p', $result);
+        return $ten;
+    }
 } else {
     echo '<script>alert("Bạn chưa đăng nhập!Vui lòng đăng nhập hoặc đăng kí");</script>';
     echo '<script>window.location="cart.php";</script>';
@@ -62,44 +68,38 @@ if (isset($_SESSION['user'])) {
                 <th>Số lượng mặt hàng</th>
                 <th>Tổng giá trị đơn hàng</th>
                 <th>Tình trạng đơn hàng</th>
+                <th>Chi tiết</th>
             </tr>
             <?php if (is_array($list_b)) { ?>
                 <?php $a[]="";?>
                 <?php foreach ($list_b as $lb) : ?>
-                    <?php
-                        $i = $lb['id'];
-                        echo $i;
-                        $sql= "SELECT namepro from cart where id_bill=$i";   
-                        $namepro =mysqli_query($conn,$sql);
-                        $result = mysqli_fetch_array($namepro);
-                        $a=implode("\n",$result);
-                        echo $a;
-                    ?>
                     <?php $ttdh = get_ttdh($lb['bill_status']); ?>
                     <?php $slsp = loadall_count($lb['id']); ?>
+                    <?php $ten = ten($lb['id']); ?>
                     <tr>
                         <td><?= $lb['id'] ?></td>
                         <td><?= $lb['ngay_dat_hang'] ?></td>
-                        <td><?php  
-                        $ten_sp= implode(",",$result);
-                        echo $ten_sp;                       
-                        ?></td>
+                        <td><?=$ten ?></td>
                         <td><?= $slsp ?></td>
                         <td><?= $lb['total'] ?></td>
                         <td><?= $ttdh ?></td>
+                        <td><a href="billcomfirm.php?id=<?=$lb['id']?>"><span class="iconify" data-icon="fluent:more-circle-20-filled" style="color: #699bf7; font-size: 40px; margin-left:8px"></span></a></td>
                     </tr>
-                    <?php unset($result[$ten_sp]); ?>
-                <?php endforeach ?>
+                    <?php endforeach ?>
             <?php } else { ?>
-                <?php $ttdh = get_ttdh($lb['bill_status']); ?>
+                <?php $ttdh = get_ttdh($list_b['bill_status']); ?>
                 <?php $slsp = loadall_count($list_b['id']); ?>
+                <?php $ten = ten($list_b['id']); ?>
                 <tr>
-                    <td><?= $lb['id'] ?></td>
-                    <td><?= $lb['ngay_dat_hang'] ?></td>
+                    <td><?= $list_b['id'] ?></td>
+                    <td><?= $list_b['ngay_dat_hang'] ?></td>
+                    <td><?=$ten ?></td>
                     <td><?= $slsp ?></td>
-                    <td><?= $lb['total'] ?></td>
+                    <td><?= $list_b['total'] ?></td>
                     <td><?= $ttdh ?></td>
+                    <td><a href="billcomfirm.php?id=<?=$lb['id']?>"><span class="iconify" data-icon="fluent:more-circle-20-filled" style="color: #699bf7; font-size: 40px; margin-left:8px"></span></a></td>
                 </tr>
+                
             <?php } ?>
         </table>
     </div>
